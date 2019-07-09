@@ -26,6 +26,7 @@ blogsRouter.post('/', async (request, response, next) => {
       title: body.title,
       url: body.url,
       likes: body.likes,
+      comments: body.comments,
       user: user
     })
     const savedBlog = await blog.save()
@@ -91,5 +92,35 @@ blogsRouter.put('/:id', async (request, response, next) => {
     next(exception)
   }
 })
+
+// Routing comments
+blogsRouter.get('/:id/comments', async (request, response) => {
+  const comments = await Blog
+    .find({})
+    .map(blog => blog.comments)
+  response.json(comments.map(comment => comment.toJSON()))
+})
+
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+  try {
+    const body = request.body
+    const updatedBlog = {
+      id: body.id,
+      title: body.title,
+      author: body.author,
+      url: body.url,
+      likes: body.likes,
+      user: body.user.id,
+      comments: body.comments
+    }
+    await Blog
+      .findByIdAndUpdate(request.params.id, updatedBlog, { new: true })
+      .populate('user', { username: 1, name: 1 })
+    response.json(updatedBlog)
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 
 module.exports = blogsRouter

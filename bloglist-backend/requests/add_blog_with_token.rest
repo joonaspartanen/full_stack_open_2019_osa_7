@@ -1,10 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJwYXJ0YW5lbiIsImlkIjoiNWQxOGQ4ZWExY2I0YTY0N2UwM2MxODgyIiwiaWF0IjoxNTYxOTA5NTE0fQ.FJ8V71dm7w5dhTTOg3meqI3EPCzSpDNlSkh-r_r30tQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpwYXJ0YW5lbiIsImlkIjoiNWQxYTE5YWQ2NGQ0ZjcyZTI0NzM5MTEwIiwiaWF0IjoxNTYyNjk3NDcwfQ.r68VCG01vt-XOgsdcmV3dgrtKLU61a0o-tnXajuqSlY
 
 {
-  "title": "Bentin uudempi blogi tokeneista",
+  "title": "Vielä blogi tokeneista",
   "author": "Nuutti Sillankorva",
   "url": "www.blogi.fi/",
-  "likes": 0
+  "likes": 0,
+  "comments":  ["Kukkuu", "pöö"]
 }

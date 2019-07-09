@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { handleRemove, handleLike } from '../reducers/blogReducer'
@@ -7,12 +7,8 @@ const Blog = (props) => {
 
   const { blog, user } = props
 
-  const [visible, setVisible] = useState(false)
-
-  const showWhenVisible = { display: visible ? '' : 'none' }
-
-  const toggleVisibility = () => {
-    setVisible(!visible)
+  if (!user) {
+    return null
   }
 
   const updateBlog = async (event) => {
@@ -40,8 +36,6 @@ const Blog = (props) => {
     }
   }
 
-  const blogAdder = () => <div style={blogRow}>added by {blog.user.name}</div>
-
   const blogStyle = {
     paddingTop: 10,
     paddingBottom: 4,
@@ -57,17 +51,21 @@ const Blog = (props) => {
 
   return (
     <div style={blogStyle} className='bloglist'>
-      <div onClick={toggleVisibility} style={blogRow} className='blog-title'>
-        <strong>{blog.title} - {blog.author}</strong>
+      <div style={blogRow} className='blog-title'>
+        <a href={`/blogs/${blog.id}`}><strong>{blog.title} - {blog.author}</strong></a>
       </div>
-      <div style={showWhenVisible} className='blog-details'>
-        <div style={blogRow}><a href={`//${blog.url}`}> {blog.url}</a></div>
+      <div className='blog-details'>
         <div style={blogRow}>{blog.likes} likes<button onClick={updateBlog} style={{ marginLeft: 5 }}>like</button></div>
-        {blogAdder()}
         {removeButton()}
       </div>
     </div>
   )
 }
 
-export default connect(null, { setNotification, handleRemove, handleLike })(Blog)
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, { setNotification, handleRemove, handleLike })(Blog)

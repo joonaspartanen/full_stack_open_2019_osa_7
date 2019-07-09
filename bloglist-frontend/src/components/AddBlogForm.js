@@ -6,9 +6,9 @@ import { createBlog } from '../reducers/blogReducer'
 
 const AddBlogForm = (props) => {
 
-  const title = useField('text')
-  const author = useField('text')
-  const url = useField('text')
+  const [title, titleReset] = useField('text')
+  const [author, authorReset] = useField('text')
+  const [url, urlReset] = useField('text')
 
   const [visible, setVisible] = useState(false)
 
@@ -40,9 +40,9 @@ const AddBlogForm = (props) => {
       }
 
       props.createBlog(blogObject)
-      title.reset()
-      author.reset()
-      url.reset()
+      titleReset()
+      authorReset()
+      urlReset()
 
       props.setNotification(
         `The blog ${title.value} by ${author.value} was added to the list`,
@@ -52,6 +52,10 @@ const AddBlogForm = (props) => {
     } catch (exception) {
       props.setNotification('Adding blog failed', 'error', 5)
     }
+  }
+
+  if (!props.user) {
+    return null
   }
 
   return (

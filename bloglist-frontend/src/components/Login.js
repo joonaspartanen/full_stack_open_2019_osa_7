@@ -1,7 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { login, getUser } from '../reducers/currentUserReducer'
+import { useField } from '../hooks'
 
-const Login = ({ handleLogin, username, password }) => {
+const Login = (props) => {
+
+  const [username] = useField('text')
+  const [password] = useField('password')
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    try {
+      props.login(username, password)
+    } catch (exception) {
+      props.setNotification('Wrong credentials', 'error', 5)
+    }
+  }
 
   const formStyle = {
     marginLeft: .5 + 'em',
@@ -36,10 +50,9 @@ const Login = ({ handleLogin, username, password }) => {
   )
 }
 
-Login.propTypes = {
-  handleLogin: PropTypes.func.isRequired,
-  username: PropTypes.object.isRequired,
-  password: PropTypes.object.isRequired
+const mapDispatchToProps = {
+  login,
+  getUser
 }
 
-export default Login
+export default connect(null, mapDispatchToProps)(Login)

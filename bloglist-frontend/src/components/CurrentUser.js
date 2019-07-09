@@ -1,26 +1,27 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { logout } from '../reducers/currentUserReducer'
 
-const CurrentUser = ({ user, setUser }) => {
+const CurrentUser = (props) => {
+
+  const user = props.user
 
   const handleLogout = () => {
     console.log(`${user.username} logging out...`)
-    window.localStorage.removeItem('loggedBloglistUser')
-    setUser(null)
+    props.logout()
   }
 
   return (
-    <>
-      <p>{user.username} is logged in
-        <button onClick={handleLogout} style={{ marginLeft: .5 + 'em' }} >Logout</button>
-      </p>
+    <>{user.username} is logged in
+      <button onClick={handleLogout} style={{ marginLeft: .5 + 'em' }} >Logout</button>
     </>
   )
 }
 
-export default CurrentUser
-
-CurrentUser.propTypes = {
-  user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
 }
+
+export default connect(mapStateToProps, { logout })(CurrentUser)

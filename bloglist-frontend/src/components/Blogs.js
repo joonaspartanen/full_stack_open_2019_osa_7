@@ -19,7 +19,8 @@ const Blogs = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    blogs: state.blogs
+    blogs: state.blogs,
+    user: state.user
   }
 }
 export default connect(mapStateToProps, null)(Blogs)

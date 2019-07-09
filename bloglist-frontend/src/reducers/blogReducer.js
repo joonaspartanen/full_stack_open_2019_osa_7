@@ -23,10 +23,21 @@ export const createBlog = blog => {
 export const handleLike = blog => {
   return async dispatch => {
     const likedBlog = { ...blog, likes: blog.likes + 1 }
-    await blogService.update(blog)
+    await blogService.update(likedBlog)
     dispatch({
       type: 'LIKE_BLOG',
       likedBlog
+    })
+  }
+}
+
+export const commentBlog = (blog, comment) => {
+  return async dispatch => {
+    const updatedBlog = { ...blog, comments: blog.comments.concat(comment) }
+    await blogService.comment(updatedBlog)
+    dispatch({
+      type: 'COMMENT_BLOG',
+      updatedBlog
     })
   }
 }
@@ -52,6 +63,8 @@ const blogReducer = (state = [], action) => {
     return state.concat(action.blog)
   case 'REMOVE_BLOG':
     return state.filter(b => b.id !== action.id)
+  case 'COMMENT_BLOG':
+    return state.map(b => b.id !== action.updatedBlog.id ? b : action.updatedBlog)
   default:
     return state
   }

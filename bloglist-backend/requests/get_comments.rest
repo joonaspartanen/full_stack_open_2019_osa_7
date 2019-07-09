@@ -1,0 +1,12 @@
+POST http://localhost:3003/api/blogs/5d24e11fbb01773c2c9307a5/comments
+Content-Type: application/json
+
+{
+  "id": "5d24e11fbb01773c2c9307a5",
+  "title": "Vielä blogi tokeneista",
+  "author": "Nuutti Sillankorva",
+  "url": "www.blogi.fi/",
+  "likes": 0,
+  "user": "5d1a19ad64d4f72e24739110",
+  "comments":  ["Kukkuu", "pöö", "prööt"]
+}

@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/blogs/5d24e408bb01773c2c9307a6/comments
+Content-Type: application/json
+
+{ "likes": 3,
+  "comments": [ "Kukkuu", "pöö", "Joko toimii?" ],
+  "author": "J. Partanen",
+  "title": "Testiblogi",
+  "url": "www.fi",
+  "user":
+   { "username": "jpartanen",
+     "name": "Joonas",
+     "id": "5d1a19ad64d4f72e24739110" },
+  "id": "5d24e408bb01773c2c9307a6" }
