@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { logout } from '../reducers/currentUserReducer'
+import { Button } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 
 const CurrentUser = (props) => {
 
@@ -9,12 +11,13 @@ const CurrentUser = (props) => {
   const handleLogout = () => {
     console.log(`${user.username} logging out...`)
     props.logout()
+    props.history.push('/')
   }
 
   return (
-    <>{user.username} is logged in
-      <button onClick={handleLogout} style={{ marginLeft: .5 + 'em' }} >Logout</button>
-    </>
+    <span style={{ color: '#FFF' }}>{user.username} is logged in
+      <Button size='mini' onClick={handleLogout} style={{ marginLeft: 1 + 'em' }} >Logout</Button>
+    </span>
   )
 }
 
@@ -24,4 +27,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { logout })(CurrentUser)
+const CurrentUserWithRouter = withRouter(CurrentUser)
+
+export default connect(mapStateToProps, { logout })(CurrentUserWithRouter)

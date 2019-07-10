@@ -1,14 +1,15 @@
 import React from 'react'
 import { handleLike, commentBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { useField } from '../hooks'
+import { Loader, Button, Form, Comment, Icon } from 'semantic-ui-react'
 
 const SingleBlog = (props) => {
 
   const blog = props.blog
 
   const [comment, commentReset] = useField('text')
-
 
   const updateBlog = async (event) => {
     event.preventDefault()
@@ -27,26 +28,64 @@ const SingleBlog = (props) => {
   }
 
   if (!blog) {
-    return <div>Loading...</div>
+    return <Loader active inline size='medium' />
   }
+
   return (
     <div>
-      <h2>{blog.title} by {blog.author}</h2>
-      <a href={`//${blog.url}`}> {blog.url}</a>
-      <div>{blog.likes} likes<button onClick={updateBlog} style={{ marginLeft: 5 }}>like</button></div>
+      <h2>
+        {blog.title} by {blog.author}
+      </h2>
+      <div><Button
+        color='teal'
+        icon='thumbs up'
+        label={{
+          as: 'a',
+          basic: true,
+          color: 'teal',
+          pointing: false,
+          content: `${blog.likes} likes`
+        }}
+        labelPosition='left'
+        onClick={updateBlog}
+        style={{ marginBottom: 10 }}
+        size='tiny'
+      >
+      </Button>
+      </div>
+      <div style={{ marginBottom: 10 }}><a href={`//${blog.url}`}> {blog.url}</a></div>
       <div>added by {blog.user.name}</div>
       <h3>Comments</h3>
-      <form onSubmit={addComment}>
-        <div>
-          <input {...comment} />
-        </div>
-        <button type="submit">Add comment</button>
-      </form>
-      <ul>
-        {blog.comments.map(comment => <li key={comment}>{comment}</li>)}
-      </ul>
+      <Form onSubmit={addComment}>
+        <Form.Field>
+          <input placeholder='Add your comment...' {...comment} required />
+        </Form.Field>
+        <Button type='submit' color='teal'>Add comment</Button>
+      </Form>
+      <Comment.Group>
+        {blog.comments.map(comment =>
+          <Comment key={comment}>
+            <Comment.Content key={comment}>
+              <Icon name='comment' color='teal' style={{ marginRight: 10 }} />
+              {comment}
+            </Comment.Content>
+          </Comment>)}
+      </Comment.Group>
     </div>
   )
 }
 
-export default connect(null, { handleLike, commentBlog })(SingleBlog)
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = {
+  handleLike,
+  commentBlog,
+  setNotification
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleBlog)

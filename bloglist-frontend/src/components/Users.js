@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Table } from 'semantic-ui-react'
 
 const Users = (props) => {
   const users = props.users
@@ -9,19 +10,23 @@ const Users = (props) => {
   }
 
   return (
-    <table>
-      <tbody>
-        <tr style={{ margin: 10 }}>
-          <th style={{ margin: 10 }}>Username</th>
-          <th style={{ margin: 10 }}>Added blogs</th>
-        </tr>
+    <Table striped celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>User</Table.HeaderCell>
+          <Table.HeaderCell>Added blogs</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {users.map(user =>
-          <tr key={user.username}>
-            <td style={{ margin: 10 }}><a href={`/users/${user.id}`}>{user.username}</a></td>
-            <td style={{ margin: 10 }}>{user.blogs.length}</td>
-          </tr>)}
-      </tbody>
-    </table>  
+          <Table.Row key={user.username}>
+            <Table.Cell>
+              <a href={`/users/${user.id}`}>{user.name}</a>
+            </Table.Cell>
+            <Table.Cell>{user.blogs.length}</Table.Cell>
+          </Table.Row>)}
+      </Table.Body>
+    </Table>
   )
 }
 const mapStateToProps = (state) => {

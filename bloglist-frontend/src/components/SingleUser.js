@@ -1,11 +1,12 @@
 import React from 'react'
+import { Loader } from 'semantic-ui-react'
 
 const SingleUser = (props) => {
 
   const user = props.user
 
   if (!user) {
-    return <div>Loading...</div>
+    return <Loader active inline size='medium' />
   }
   return (
     <div>

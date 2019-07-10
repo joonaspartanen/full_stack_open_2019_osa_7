@@ -3,6 +3,7 @@ import { useField } from '../hooks'
 import { setNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
+import { Button, Icon, Form } from 'semantic-ui-react'
 
 const AddBlogForm = (props) => {
 
@@ -61,26 +62,34 @@ const AddBlogForm = (props) => {
   return (
     <>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>Add blog</button>
+        <Button
+          size='large'
+          color='teal'
+          onClick={toggleVisibility}
+        >
+          <Icon name='pencil'>
+          </Icon>
+          Add blog
+        </Button>
       </div>
       <div style={showWhenVisible}>
-        <h2>Add new blog</h2>
-        <form onSubmit={addBlog}>
-          <div>
+        <h3>Add new blog</h3>
+        <Form onSubmit={addBlog}>
+          <Form.Field>
             <label htmlFor="title">Title:</label>
-            <input {...title} style={formStyle} />
-          </div>
-          <div>
+            <input placeholder='Title' {...title} style={formStyle} required />
+          </Form.Field>
+          <Form.Field>
             <label htmlFor="author">Author:</label>
-            <input {...author} style={formStyle} />
-          </div>
-          <div>
+            <input placeholder='Author' {...author} style={formStyle} required />
+          </Form.Field>
+          <Form.Field>
             <label htmlFor="url">URL:</label>
-            <input {...url} style={formStyle} />
-          </div>
-          <button type="submit">Add blog</button>
-          <button onClick={toggleVisibility} style={{ marginLeft: 10 }}>Cancel</button>
-        </form>
+            <input placeholder='URL' {...url} style={formStyle} required />
+          </Form.Field>
+          <Button type="submit" color='teal'>Add blog</Button>
+          <Button type="button" onClick={toggleVisibility} style={{ marginLeft: 10 }}>Cancel</Button>
+        </Form>
       </div>
     </>
   )

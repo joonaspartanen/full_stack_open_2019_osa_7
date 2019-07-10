@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { handleRemove, handleLike } from '../reducers/blogReducer'
+import { Table, Button, Header, Icon } from 'semantic-ui-react'
 
 const Blog = (props) => {
 
@@ -9,6 +10,25 @@ const Blog = (props) => {
 
   if (!user) {
     return null
+  }
+
+  const removeButton = () =>
+    blog.user.username === user.username &&
+    <Button onClick={removeBlog} size='small'>
+      <Icon name='trash alternate' />
+      Delete
+    </Button>
+
+  const removeBlog = async event => {
+    event.preventDefault()
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      try {
+        props.handleRemove(blog.id)
+        props.setNotification(`Blog ${blog.title} was removed successfully`, 'success', 5)
+      } catch (exception) {
+        props.setNotification(`Blog ${blog.title} has already been removed`, 'error', 5)
+      }
+    }
   }
 
   const updateBlog = async (event) => {
@@ -20,47 +40,41 @@ const Blog = (props) => {
     }
   }
 
-  const removeButton = () =>
-    blog.user.username === user.username &&
-    <div style={blogRow}><button onClick={removeBlog}>remove</button></div>
-
-  const removeBlog = async event => {
-    event.preventDefault()
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-      try {
-        props.handleRemove(blog.id)
-        props.setNotification(`Blog ${blog.title} removed successfully`, 'success', 5)
-      } catch (exception) {
-        props.setNotification(`Blog ${blog.title} has already been removed`, 'error', 5)
-      }
-    }
-  }
-
-  const blogStyle = {
-    paddingTop: 10,
-    paddingBottom: 4,
-    paddingLeft: 4,
-    marginBottom: 10,
-    marginTop: 4,
-    border: '1px solid'
-  }
-
-  const blogRow = {
-    marginBottom: 6
-  }
-
   return (
-    <div style={blogStyle} className='bloglist'>
-      <div style={blogRow} className='blog-title'>
-        <a href={`/blogs/${blog.id}`}><strong>{blog.title} - {blog.author}</strong></a>
-      </div>
-      <div className='blog-details'>
-        <div style={blogRow}>{blog.likes} likes<button onClick={updateBlog} style={{ marginLeft: 5 }}>like</button></div>
+    <Table.Row className='bloglist'>
+      <Table.Cell className='blog-title'>
+        <Header as='h4'>
+          <a href={`/blogs/${blog.id}`}>{blog.title}</a>
+        </Header>
+      </Table.Cell>
+      <Table.Cell className='blog-title'>
+        {blog.author}
+      </Table.Cell>
+      <Table.Cell className='blog-details'>
+        <Button
+          size='small'
+          color='teal'
+          icon='thumbs up'
+          label={{
+            as: 'a',
+            basic: true,
+            color: 'teal',
+            pointing: false,
+            content: `${blog.likes} likes`
+          }}
+          labelPosition='left'
+          onClick={updateBlog}
+          style={{ marginRight: 10 }}
+        >
+        </Button>
         {removeButton()}
-      </div>
-    </div>
+      </Table.Cell>
+    </Table.Row>
   )
 }
+
+// {blog.likes} likes<button onClick={updateBlog} style={{ marginLeft: 5 }}>like</button>
+
 
 const mapStateToProps = (state) => {
   return {

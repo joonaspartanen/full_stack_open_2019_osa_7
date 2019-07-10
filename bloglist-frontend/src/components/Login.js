@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { login, getUser } from '../reducers/currentUserReducer'
 import { useField } from '../hooks'
+import { Form, Button } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 
 const Login = (props) => {
 
@@ -12,40 +14,36 @@ const Login = (props) => {
     event.preventDefault()
     try {
       props.login(username, password)
+      props.history.push('/')
     } catch (exception) {
       props.setNotification('Wrong credentials', 'error', 5)
     }
   }
 
-  const formStyle = {
-    marginLeft: .5 + 'em',
-    marginBottom: 1 + 'em'
-  }
-
   return (
     <div className='login-form'>
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          Username
+      <Form onSubmit={handleLogin}>
+        <Form.Field>
+          <label>Username</label>
           <input
+            placeholder='Username'
             value={username.value}
             type={username.type}
             onChange={username.onChange}
-            style={formStyle}
           />
-        </div>
-        <div>
-          Password
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
           <input
+            placeholder='Password'
             value={password.value}
             type={password.type}
             onChange={password.onChange}
-            style={formStyle}
           />
-        </div>
-        <button type="submit" style={formStyle}>Login</button>
-      </form>
+        </Form.Field>
+        <Button color='teal' type="submit">Login</Button>
+      </Form>
     </div>
   )
 }
@@ -55,4 +53,6 @@ const mapDispatchToProps = {
   getUser
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+const LoginWithRouter = withRouter(Login)
+
+export default connect(null, mapDispatchToProps)(LoginWithRouter)

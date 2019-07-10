@@ -1,23 +1,31 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Message, Icon } from 'semantic-ui-react'
 
 const Notification = (props) => {
 
-  const style = {
-    color: 'white',
-    background: props.notification.type === 'error' ? 'crimson' : 'darkgreen',
-    fontSize: 20,
-    borderStyle: 'solid',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  }
+  const notification = props.notification
 
-  if (props.notification.message) {
+  if (notification.message) {
+    if (notification.type === 'error') {
+      return (
+        <Message icon negative>
+          <Icon name='frown outline' />
+          <Message.Content>
+            <Message.Header>Oops!</Message.Header>
+            {props.notification.message}
+          </Message.Content>
+        </Message>
+      )
+    }
     return (
-      <div style={style}>
-        {props.notification.message}
-      </div>
+      <Message icon positive>
+        <Icon name='smile outline' />
+        <Message.Content>
+          <Message.Header>Excellent!</Message.Header>
+          {props.notification.message}
+        </Message.Content>
+      </Message>
     )
   }
 

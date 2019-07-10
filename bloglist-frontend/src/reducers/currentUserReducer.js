@@ -1,19 +1,25 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import { setNotification } from './notificationReducer'
 
 export const login = (username, password) => {
   return async dispatch => {
-    const loggedUser = await loginService.login({
-      username: username.value, password: password.value,
-    })
-    window.localStorage.setItem(
-      'loggedBloglistUser', JSON.stringify(loggedUser)
-    )
-    blogService.setToken(loggedUser.token)
-    dispatch({
-      type: 'LOGIN',
-      user: loggedUser
-    })
+    try {
+      const loggedUser = await loginService.login({
+        username: username.value, password: password.value,
+      })
+      window.localStorage.setItem(
+        'loggedBloglistUser', JSON.stringify(loggedUser)
+      )
+      blogService.setToken(loggedUser.token)
+      dispatch({
+        type: 'LOGIN',
+        user: loggedUser
+      })
+    } catch (exception) {
+      console.log(exception)
+      dispatch(setNotification('Wrong credentials', 'error', 5))
+    }
   }
 }
 

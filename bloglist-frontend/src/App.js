@@ -14,8 +14,9 @@ import { login, getUser } from './reducers/currentUserReducer'
 import { getAllUsers } from './reducers/usersReducer'
 import {
   BrowserRouter as Router,
-  Route, Link
+  Route, Link, Redirect
 } from 'react-router-dom'
+import { Container, Menu } from 'semantic-ui-react'
 
 const App = (props) => {
 
@@ -43,25 +44,36 @@ const App = (props) => {
   const userById = (id) => props.users.find(user => user.id === id)
 
   return (
-    <div>
+    <Container>
       <Router>
-        <nav>
-          <Link style={{ paddingRight: 10 }} to="/">Home</Link>
-          <Link style={{ paddingRight: 10 }} to="/users">Users</Link>
+        <Menu color='teal' inverted stackable>
+          <Menu.Item header as='h3' style={{ color: '#FFF' }}>Bloglist</Menu.Item>
+          <Menu.Item>
+            <Link style={{ paddingRight: 10, color: '#FFF' }} to="/">Home</Link>
+          </Menu.Item>
+          <Menu.Item >
+            <Link style={{ paddingRight: 10, color: '#FFF' }} to="/users">Users</Link>
+          </Menu.Item>
           {user !== null &&
-            <CurrentUser />
+            <Menu.Item>
+              <CurrentUser />
+            </Menu.Item>
           }
-        </nav>
-        <h1>Bloglist</h1>
+        </Menu>
         <Notification />
         {user === null && <Login />}
         <Route exact path="/" render={() =>
-          <div>
-            <AddBlogForm user={user} />
-            <Blogs />
-          </div>}
+          user ?
+            <div>
+              <AddBlogForm user={user} />
+              <Blogs />
+            </div>
+            : <Redirect to='/' />
+        }
         />
-        <Route exact path="/users" render={() => <Users />} />
+        <Route exact path="/users" render={() =>
+          user ? <Users /> : <Redirect to='/' />
+        } />
         <Route exact path="/users/:id" render={({ match }) =>
           <SingleUser user={userById(match.params.id)} />
         } />
@@ -69,7 +81,7 @@ const App = (props) => {
           <SingleBlog blog={blogById(match.params.id)} />
         } />
       </Router>
-    </div>
+    </Container >
   )
 }
 
