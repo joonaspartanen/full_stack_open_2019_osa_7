@@ -51,14 +51,14 @@ export const logout = () => {
 const userReducer = (state = [], action) => {
   console.log('action', action)
   switch (action.type) {
-    case 'LOGIN':
-      return action.user
-    case 'GET_USER':
-      return action.user
-    case 'LOGOUT':
-      return action.user
-    default:
-      return state
+  case 'LOGIN':
+    return action.user
+  case 'GET_USER':
+    return action.user
+  case 'LOGOUT':
+    return action.user
+  default:
+    return state
   }
 }
 
