@@ -58,9 +58,9 @@ const SingleBlog = (props) => {
       <h3>Comments</h3>
       <Form onSubmit={addComment}>
         <Form.Field>
-          <input placeholder='Add your comment...' {...comment} required />
+          <input placeholder='Add your comment...' {...comment} required data-cy='commentInput' />
         </Form.Field>
-        <Button type='submit' color='teal'>Add comment</Button>
+        <Button type='submit' color='teal' data-cy='submitComment'>Add comment</Button>
       </Form>
       <Comment.Group>
         {blog.comments.map(comment =>

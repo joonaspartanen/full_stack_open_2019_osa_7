@@ -21,6 +21,7 @@ import { Container, Menu } from 'semantic-ui-react'
 const App = (props) => {
 
   const user = props.user
+  console.log('User:', user)
 
   useEffect(() => {
     props.initializeBlogs()
@@ -47,12 +48,27 @@ const App = (props) => {
     <Container>
       <Router>
         <Menu color='teal' inverted stackable>
-          <Menu.Item header as='h3' style={{ color: '#FFF' }}>Bloglist</Menu.Item>
-          <Menu.Item>
-            <Link style={{ paddingRight: 10, color: '#FFF' }} to="/">Home</Link>
+          <Menu.Item
+            header as='h3'
+            style={{ color: '#FFF' }}
+          >
+            Bloglist
           </Menu.Item>
-          <Menu.Item >
-            <Link style={{ paddingRight: 10, color: '#FFF' }} to="/users">Users</Link>
+          <Menu.Item data-cy='homeLink'>
+            <Link
+              style={{ paddingRight: 10, color: '#FFF' }}
+              to="/"
+            >
+              Home
+            </Link>
+          </Menu.Item>
+          <Menu.Item data-cy='usersLink'>
+            <Link
+              style={{ paddingRight: 10, color: '#FFF' }}
+              to="/users"
+            >
+              Users
+            </Link>
           </Menu.Item>
           {user !== null &&
             <Menu.Item>

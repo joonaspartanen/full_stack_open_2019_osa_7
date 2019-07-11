@@ -31,6 +31,7 @@ const Login = (props) => {
             value={username.value}
             type={username.type}
             onChange={username.onChange}
+            data-cy='username'
           />
         </Form.Field>
         <Form.Field>
@@ -40,9 +41,10 @@ const Login = (props) => {
             value={password.value}
             type={password.type}
             onChange={password.onChange}
+            data-cy='password'
           />
         </Form.Field>
-        <Button color='teal' type="submit">Login</Button>
+        <Button color='teal' type="submit" data-cy="login">Login</Button>
       </Form>
     </div>
   )

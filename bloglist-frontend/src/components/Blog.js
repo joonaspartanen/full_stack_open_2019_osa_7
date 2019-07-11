@@ -14,7 +14,7 @@ const Blog = (props) => {
 
   const removeButton = () =>
     blog.user.username === user.username &&
-    <Button onClick={removeBlog} size='small'>
+    <Button onClick={removeBlog} size='small' data-cy='removeButton'>
       <Icon name='trash alternate' />
       Delete
     </Button>
@@ -43,7 +43,7 @@ const Blog = (props) => {
   return (
     <Table.Row className='bloglist'>
       <Table.Cell className='blog-title'>
-        <Header as='h4'>
+        <Header as='h4' data-cy='addedBlogTitle'>
           <a href={`/blogs/${blog.id}`}>{blog.title}</a>
         </Header>
       </Table.Cell>
@@ -65,6 +65,7 @@ const Blog = (props) => {
           labelPosition='left'
           onClick={updateBlog}
           style={{ marginRight: 10 }}
+          data-cy='likeButton'
         >
         </Button>
         {removeButton()}

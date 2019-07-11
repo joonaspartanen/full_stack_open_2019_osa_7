@@ -66,6 +66,7 @@ const AddBlogForm = (props) => {
           size='large'
           color='teal'
           onClick={toggleVisibility}
+          data-cy='showAddBlogForm'
         >
           <Icon name='pencil'>
           </Icon>
@@ -77,17 +78,36 @@ const AddBlogForm = (props) => {
         <Form onSubmit={addBlog}>
           <Form.Field>
             <label htmlFor="title">Title:</label>
-            <input placeholder='Title' {...title} style={formStyle} required />
+            <input
+              placeholder='Title'
+              {...title}
+              style={formStyle}
+              required
+              data-cy='blogTitle'
+            />
           </Form.Field>
           <Form.Field>
             <label htmlFor="author">Author:</label>
-            <input placeholder='Author' {...author} style={formStyle} required />
+            <input
+              placeholder='Author'
+              {...author}
+              style={formStyle}
+              required
+              data-cy='blogAuthor'
+            />
           </Form.Field>
           <Form.Field>
             <label htmlFor="url">URL:</label>
-            <input placeholder='URL' {...url} style={formStyle} required />
+            <input
+              placeholder='URL' {...url}
+              style={formStyle}
+              required
+              data-cy='blogUrl'
+            />
           </Form.Field>
-          <Button type="submit" color='teal'>Add blog</Button>
+          <Button type="submit" color='teal' data-cy='submitBlog'>
+            Add blog
+          </Button>
           <Button type="button" onClick={toggleVisibility} style={{ marginLeft: 10 }}>Cancel</Button>
         </Form>
       </div>

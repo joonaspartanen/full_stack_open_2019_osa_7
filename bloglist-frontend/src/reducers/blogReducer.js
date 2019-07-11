@@ -55,18 +55,18 @@ export const handleRemove = id => {
 const blogReducer = (state = [], action) => {
   console.log('action', action)
   switch (action.type) {
-  case 'LIKE_BLOG':
-    return state.map(b => b.id !== action.likedBlog.id ? b : action.likedBlog)
-  case 'INIT_BLOGS':
-    return action.data.sort((a, b) => b.likes - a.likes)
-  case 'NEW_BLOG':
-    return state.concat(action.blog)
-  case 'REMOVE_BLOG':
-    return state.filter(b => b.id !== action.id)
-  case 'COMMENT_BLOG':
-    return state.map(b => b.id !== action.updatedBlog.id ? b : action.updatedBlog)
-  default:
-    return state
+    case 'LIKE_BLOG':
+      return state.map(b => b.id !== action.likedBlog.id ? b : action.likedBlog)
+    case 'INIT_BLOGS':
+      return action.data.sort((a, b) => b.likes - a.likes)
+    case 'NEW_BLOG':
+      return state.concat(action.blog)
+    case 'REMOVE_BLOG':
+      return state.filter(b => b.id !== action.id)
+    case 'COMMENT_BLOG':
+      return state.map(b => b.id !== action.updatedBlog.id ? b : action.updatedBlog)
+    default:
+      return state
   }
 }
 

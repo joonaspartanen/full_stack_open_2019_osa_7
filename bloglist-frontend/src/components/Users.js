@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Table } from 'semantic-ui-react'
+import { getAllUsers } from '../reducers/usersReducer'
 
 const Users = (props) => {
   const users = props.users
+
+  useEffect(() => {
+    props.getAllUsers()
+    // eslint-disable-next-line
+  }, [])
 
   if (!users) {
     return null
@@ -20,10 +26,12 @@ const Users = (props) => {
       <Table.Body>
         {users.map(user =>
           <Table.Row key={user.username}>
-            <Table.Cell>
+            <Table.Cell data-cy='user'>
               <a href={`/users/${user.id}`}>{user.name}</a>
             </Table.Cell>
-            <Table.Cell>{user.blogs.length}</Table.Cell>
+            <Table.Cell data-cy='addedBlogs'>
+              {user.blogs.length}
+            </Table.Cell>
           </Table.Row>)}
       </Table.Body>
     </Table>
@@ -35,4 +43,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Users)
+export default connect(mapStateToProps, { getAllUsers })(Users)
